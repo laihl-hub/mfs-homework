@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        用户名：<input type="text" name="name"><br>
+        密码：<input type="password" name="password"><br>
+        性别：<input type="radio" name="sex" value="1">男
+              <input type="radio" name="sex" value="2">女<br>
+        技能：<input type="checkbox" name="checkbox" value="1">HTML
+              <input type="checkbox" name="checkbox" value="2">CSS
+              <input type="checkbox" name="checkbox" value="3">JavaScript <br>
+        请输入1~100的整数：<input type="number" name="ev" min="1" max="100"><br>
+        出生日期：<input type="date" name="date"><br>
+        喜欢的颜色：<input type="color" name="color"><br>
+        喜欢程度：<input type="range" name="range" min="0" max="10"><br>
+        入学时间：<input type="month" value="year_month"><br>
+        周：<input type="week" name="year_week"><br>
+        时间：<input type="time" name="time"><br>
+        具体时间：<input type="datetime" name="dtime" placeholder="Chrome,Firefox或IE不支持datetime"><br>
+        无时区的具体时间：<input type="datetime-local" name="dtime_local"><br>
+        邮箱：<input type="email" name="email" required><br>
+        搜索：<input type="search" name="search"><br>
+        电话：<input type="tel" name="tel"><br>
+        URL：<input type="url" name="url"><br>
+        <input type="submit" name="submit" value="提交">
+        <input type="reset" name="reset" value="重置">
+        <input type="button" name="button" value="普通按钮">
+        <input type="image" name="img_btn" src="../image/52.png">
+    </form>
+    <hr>
+    <hr>
+    <form action="" method="post">
+        邮箱：<input type="email" name="email1" required><br>
+        请输入0~100之间的偶数：<input type="number" name="ev" min="0" max="100" step="2"><br>
+        地址：<input type="text" name="text" list="city">
+              <datalist id="city">
+                  <option value="北京"></option>
+                  <option value="上海"></option>
+                  <option value="广州"></option>
+                  <option value="深圳"></option>
+              </datalist><br><br>
+        <button type="submit">提交</button>
+        <button type="reset" style="margin-left: 10px;">重置</button>
+    </form>
+</body>
+</html>
