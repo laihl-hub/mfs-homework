@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="left">
+        <ul>
+            <li><a href="http://www.sina.com.cn" target="content">新浪</a></li>
+            <li><a href="https://www.mafengshe.com" target="content">码蜂社</a></li>
+            <li><a href="https://www.w3school.com.cn/" target="content">w3school</a></li>
+            <li><a href="https://element.eleme.cn/#/zh-CN" target="content">el-ui</a></li>
+            <li><a href="https://iview.github.io/docs/guide/install" target="content">iview</a></li>
+            <li><a href="https://developer.mozilla.org/zh-CN/" target="content">MDN</a></li>
+            <li><a href="https://es6.ruanyifeng.com/" target="content">ECMAScript 入门</a></li>
+            <li><a href="https://juejin.cn/">掘金</a></li>
+            <li><a href="https://leetcode-cn.com/" target="content">leetcode</a></li>
+        </ul>
+    </div>
+    <iframe src="" frameborder="0" name="content"></iframe>
+    <script>
+        let lis=document.querySelectorAll('li')
+        let length=lis.length
+        for(let i=0;i<length;i++){
+            lis[i].onclick=function(){
+                for(let j=0;j<length;j++){
+                    lis[j].className=''
+                }
+                lis[i].className='selected'
+            }
+        }
+    </script>
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+        .left{
+            width: 200px;
+            height: 100%;
+            background-color: rgb(223, 234, 235);
+        }
+        iframe{
+            flex: 1;
+            background-color: aqua;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+        }
+        li{
+            height: 60px;
+            text-align: center;
+            border-bottom:1px solid beige;
+            line-height: 60px;
+        }
+        a{
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: lightslategray;
+        }
+        a:hover{
+            background-color: lightsteelblue;
+            color: black;
+        }
+        .selected{
+            background-color: lightblue;
+            color: black;
+        }
+    </style>
+</body>
+</html>
