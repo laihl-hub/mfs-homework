@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .nav{
+            display: inline-block;
+            font-size: 20px;
+        }
+        .nav:hover{
+            color: aqua;
+            cursor: pointer;
+        }
+        ul{
+            display: none;
+            list-style: none;
+            padding: 10px;
+            margin: 0;
+        }
+        .nav:hover ul{
+            display: block;
+            position: absolute;
+            color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <span class="nav" style="margin-right: 50px;">
+        导航1
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+    </span>
+    <span class="nav">
+        导航2
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+    </span>
+</body>
+</html>

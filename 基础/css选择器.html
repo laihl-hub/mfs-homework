@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            font-size: 20px;
+            color: lightseagreen !important;/*字体颜色表现为这*/
+        }
+        div{
+            width: 50px;
+            height: 50px;
+            font-size: 10px;/*字体大小*/
+            background-color: cadetblue;
+            color: lightskyblue;
+        }
+        #div1{
+            width: 200px;/*宽度表现，覆盖前面设置的宽度*/
+        }
+        .class1{
+            width: 300px;/*不能覆盖id选择器设置的宽度*/
+            height: 300px;/*高度表现，覆盖前面的高度*/
+            border: 5px solid salmon;
+        }
+        div[index="1"]{
+            border: 5px solid lightblue;/*覆盖前面的边框设置*/
+        }
+        /*!important>内联>id选择器>类选择器=属性选择器>标签选择器>通配符选择器*/
+        
+    </style>
+</head>
+<body>
+    <div id="div1" class="class1" style="color: rgb(36, 214, 214); background-color: blanchedalmond;" index="1">这是一个div</div>
+    
+</body>
+</html>
