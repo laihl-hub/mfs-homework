@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        .right_angle{
+            width: 0;
+            height: 0;
+            border: 30px solid transparent;
+            display: inline-block;
+        }
+        .left{
+            border-left: 30px solid lightskyblue;
+        }
+        .right{
+            border-right: 30px solid lightseagreen;
+        }
+        .top{
+            border-top: 30px solid lightsalmon;
+        }
+        .bottom{
+            border-bottom: 30px solid lightpink;
+        }
+
+        .regular{
+            width: 0px;
+            height: 0px;
+            border: 30px solid transparent;
+            border-bottom: 52px solid lemonchiffon;/*约等于52*/
+        }
+
+        .trapezoid{
+            width: 30px;
+            border-bottom: 50px solid lightslategray;
+            border-right: 30px solid transparent;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="right_angle left"></div>
+    <div class="right_angle right"></div>
+    <div class="right_angle top" style="margin-left: 60px;"></div>
+    <div class="right_angle bottom" style="margin-left: 60px;"></div>
+    <div class="regular"></div>
+    <div class="trapezoid"></div>
+</body>
+</html>
