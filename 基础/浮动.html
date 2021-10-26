@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../iconfont/iconfont.css">
+    <style>
+        header{
+            position: fixed;
+            width: 100%;
+            height: 50px;
+            background-color: bisque;
+        }
+        .container{
+            width: 80%;
+            height: 100%;
+            margin: auto;
+        }
+        a{
+            float: left;
+            height: 50px;
+            margin: 0 20px;
+            text-decoration: none;
+            line-height: 50px;
+            color: black; 
+        }
+        .childContainer{
+            float: left;
+            width: 80%;
+            height: 50px;
+        }
+        .right{
+            float: right;
+        }
+        a:hover{
+            color: rgb(77, 105, 230);
+        }
+        ul{
+            display: none;
+            list-style: none;
+            padding: 0;
+            margin: 0 -15px;
+            width: 80px;
+            color: black;
+            text-align: center;
+        }
+        a:hover ul{
+            position: absolute;
+            display: block;
+            background-color: rgba(255, 228, 196, 0.356);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <i class="iconfont icon-baolingqiu" style="font-size: 40px;line-height: 50px;float: left;"></i>
+            <a href="" style="font-weight: bolder;">码蜂社</a>
+            <div class="childContainer">
+                <a href="">首页</a>
+                <a href="">基础闯关班</a>
+                <a href="">web闯关班</a>
+                <a href="">课程选项</a>
+                <a href="">社区
+                    <ul>
+                        <li>论坛</li>
+                        <li>关于我们</li>
+                    </ul>
+                </a>
+                <a href="">关于我们</a>
+                <a href="" class="right">登录</a>
+                <a href="" class="right">注册</a>
+            </div>
+            
+        </div>
+    </header>
+</body>
+</html>
