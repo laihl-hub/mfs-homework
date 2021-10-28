@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../iconfont/iconfont.css">
+    <title>Document</title>
+    <style>
+        .container{
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background-color: aliceblue;
+        }
+        ul{
+            display: none;
+            list-style: none;
+            padding: 0;
+            background-color: aliceblue;
+            margin: 0 0 0 -20px;
+            color: black;
+        }
+        li{
+            width: 80px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+        }
+        i{
+            position: relative;
+            left: 200px;
+        }
+        a{
+            text-decoration: none;
+            display: inline-block;
+            height: 50px;
+            line-height: 50px;
+            color: black;
+        }
+        a:hover{
+            color: lightslategray;
+        }
+        a:hover ul{
+            display: block;
+            position: absolute;
+        }
+        .title{
+            position: absolute;
+            top: 0;
+            left: 250px;
+        }
+        .nav-box{
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 350px;
+        }
+        .nav-box a{
+            padding: 0 10px;
+        }
+        .right{
+            position: relative;
+            left: 250px;
+        }
+        .main{
+            height: 1000px;
+            background-color: rgb(126, 124, 123);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <i class="iconfont icon-baolingqiu" style="font-size: 40px;line-height: 50px;"></i>
+        <a href="" style="font-weight: bolder;" class="title">码蜂社</a>
+        <div class="nav-box">
+            <a href="">首页</a>
+            <a href="">基础闯关班</a>
+            <a href="">web闯关班</a>
+            <a href="">课程选项</a>
+            <a href="">社区
+                <ul>
+                    <li>论坛</li>
+                    <li>关于我们</li>
+                </ul>
+            </a>
+            <a href="">关于我们</a>
+            <a href="" class="right">登录</a>
+            <a href="" class="right">注册</a>
+        </div>
+    </div>
+    <div class="main"></div>
+</body>
+</html>
