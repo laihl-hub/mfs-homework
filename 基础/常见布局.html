@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 传统方法 */
+        .container1 {
+            box-sizing: border-box;
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+            padding: 0 300px 0 100px;
+        }
+
+        .container1 .main {
+            float: left;
+            width: 100%;
+            height: 100%;
+            background-color: lightslategrey;
+        }
+
+        .container1 .left {
+            float: left;
+            width: 100px;
+            height: 100%;
+            margin-left: -100%;
+            position: relative;
+            left: -100px;
+            background-color: lightsteelblue;
+        }
+
+        .container1 .right {
+            float: left;
+            width: 300px;
+            height: 100%;
+            margin-left: -300px;
+            position: relative;
+            right: -300px;
+            background-color: lightyellow;
+        }
+
+
+        /* flex布局 */
+        .container2 {
+            width: 100%;
+            height: 300px;
+            display: flex;
+        }
+
+        .container2 .main {
+            flex: 1;
+            height: 100%;
+            background-color: lightgrey;
+        }
+
+        .container2 .left {
+            width: 100px;
+            height: 100%;
+            background-color: lightpink;
+            order: -1;
+        }
+
+        .container2 .right {
+            width: 300px;
+            height: 100%;
+            background-color: lightsalmon;
+        }
+    </style>
+</head>
+
+<body>
+
+    传统方法实现圣杯布局
+    <div class="container1">
+        <div class="main">主要内容</div>
+        <div class="left">左侧栏</div>
+        <div class="right">右侧栏</div>
+    </div>
+
+    flex布局实现圣杯布局
+    <div class="container2">
+        <div class="main">主要内容</div>
+        <div class="left">左侧栏</div>
+        <div class="right">右侧栏</div>
+    </div>
+</body>
+
+</html>
