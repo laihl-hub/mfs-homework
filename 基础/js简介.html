@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    这啥也不是
+    <script>
+        document.write('<ul><li>码蜂社</li><li>前端</li><li>教程</li></ul>')
+
+        // js基础概念
+        var a = 1
+        var b = '2'
+        var c = true
+
+
+        // js数据类型
+        parseFloat('1.0')//1.0
+        parseInt('2')//2
+        parseInt('str')//NaN
+        Number(true)//1
+        Number([])//0
+        Number([1, 2, 3])//NaN
+        Number({})//NaN
+        Number({ a: 1 })//NaN
+        Number(function () { })//NaN
+
+        Boolean('1')//true
+        Boolean('str')//true
+        Boolean(1)//true
+        Boolean(0)//false
+        Boolean([])//true
+        Boolean([1, 2, 3])//true
+        Boolean({})//true
+        Boolean({ a: 1 })//true
+        Boolean(function () { })//true
+
+        var obj = {
+            a: 1,
+            b: '2',
+            c: true
+        }
+    </script>
+</body>
+
+</html>

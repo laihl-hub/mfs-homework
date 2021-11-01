@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var file = 'E:\码蜂社学习\基础\js字符串.txt'
+        function substrFile(filename) {
+            return filename.slice(filename.lastIndexOf('.') + 1, filename.length)
+        }
+        var last = substrFile(file)
+        console.log(last);
+
+        function upperWord(str) {
+            let arr = str.split(' ')
+            for (let i = 0; i < arr.length; i++) {
+                arr[i] = arr[i].slice(0, 1).toUpperCase() + arr[i].slice(1)
+            }
+            return arr.join(' ')
+        }
+        var str = 'this is a string'
+        var upperStr = upperWord(str)
+        console.log(upperStr);
+    </script>
+</body>
+
+</html>

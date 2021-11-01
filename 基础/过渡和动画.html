@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background-color: aliceblue;
+            transition: background-color 1s;
+        }
+
+        .container:hover {
+            background-color: bisque;
+        }
+
+        ul {
+            /* display: none; */
+            position: absolute;
+            list-style: none;
+            padding: 0;
+            background-color: aliceblue;
+            margin: 0 0 0 -20px;
+            color: black;
+            max-height: 0;
+            transition: max-height 1s, backgound-color 1s;
+            overflow: hidden;
+        }
+
+        li {
+            width: 80px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        i {
+            position: relative;
+            left: 200px;
+        }
+
+        a {
+            text-decoration: none;
+            display: inline-block;
+            height: 50px;
+            line-height: 50px;
+            color: black;
+        }
+
+        a:hover {
+            color: lightslategray;
+        }
+
+        a:hover ul {
+            display: block;
+            max-height: 200px;
+            background-color: bisque
+        }
+
+        .title {
+            position: absolute;
+            top: 0;
+            left: 250px;
+        }
+
+        .nav-box {
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 350px;
+        }
+
+        .nav-box a {
+            padding: 0 10px;
+        }
+
+        .right {
+            position: relative;
+            left: 250px;
+        }
+
+        .main {
+            height: 1000px;
+            background-color: rgb(126, 124, 123);
+        }
+
+        @keyframes rotate_animation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader {
+            width: 64px;
+            height: 64px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -32px;
+            margin-left: -32px;
+            transform-origin: 16px 16px;
+            animation: rotate_animation 5s linear infinite;
+        }
+
+        .loader .line {
+            width: 64px;
+            height: 24px;
+            position: absolute;
+            top: 4px;
+            left: 0;
+            transform-origin: 4px 4px;
+        }
+
+        .loader .line:nth-child(1) {
+            transform: rotate(0deg);
+        }
+
+        .loader .line:nth-child(2) {
+            transform: rotate(90deg);
+        }
+
+        .loader .line:nth-child(3) {
+            transform: rotate(180deg);
+        }
+
+        .loader .line:nth-child(4) {
+            transform: rotate(270deg);
+        }
+
+        @keyframes move_animation {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(-64px, 0);
+            }
+
+            75% {
+                transform: translate(32px, 0);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        .loader .line .circle {
+            position: absolute;
+            border-radius: 50%;
+            animation: move_animation 2.5s linear infinite;
+        }
+
+        .loader .line .circle:nth-child(1) {
+            width: 8px;
+            height: 8px;
+            top: 50%;
+            left: 50%;
+            margin-top: -4px;
+            margin-left: -4px;
+            animation-delay: -0.3s;
+        }
+
+        .loader .line .circle:nth-child(2) {
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin-top: -8px;
+            margin-left: -8px;
+            animation-delay: -0.6s;
+        }
+
+        .loader .line .circle:nth-child(3) {
+            width: 24px;
+            height: 24px;
+            top: 50%;
+            left: 50%;
+            margin-top: -12px;
+            margin-left: -12px;
+            animation-delay: -0.9s;
+        }
+
+        .loader .circle-blue {
+            background-color: #1f4e5a;
+        }
+
+        .loader .circle-yellow {
+            background-color: #ffb265;
+        }
+
+        .loader .circle-red {
+            background-color: #ff5955;
+        }
+
+        .loader .circle-green {
+            background-color: #00a691;
+        }
+
+        @keyframes caonima {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .cao {
+            width: 100px;
+            height: 100px;
+            background-color: bisque;
+            position: absolute;
+            top: 300px;
+            left: 10px;
+            animation: caonima 2s linear infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <i class="iconfont icon-baolingqiu" style="font-size: 40px;line-height: 50px;"></i>
+        <a href="" style="font-weight: bolder;" class="title">码蜂社</a>
+        <div class="nav-box">
+            <a href="">首页</a>
+            <a href="">基础闯关班</a>
+            <a href="">web闯关班</a>
+            <a href="">课程选项</a>
+            <a href="">社区
+                <ul>
+                    <li>论坛</li>
+                    <li>关于我们</li>
+                </ul>
+            </a>
+            <a href="">关于我们</a>
+            <a href="" class="right">登录</a>
+            <a href="" class="right">注册</a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="loader">
+            <div class="line">
+                <div class="circle circle-blue"></div>
+                <div class="circle circle-blue"></div>
+                <div class="circle circle-blue"></div>
+            </div>
+            <div class="line">
+                <div class="circle circle-yellow"></div>
+                <div class="circle circle-yellow"></div>
+                <div class="circle circle-yellow"></div>
+            </div>
+            <div class="line">
+                <div class="circle circle-red"></div>
+                <div class="circle circle-red"></div>
+                <div class="circle circle-red"></div>
+            </div>
+            <div class="line">
+                <div class="circle circle-green"></div>
+                <div class="circle circle-green"></div>
+                <div class="circle circle-green"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cao"></div>
+</body>
+
+</html>
