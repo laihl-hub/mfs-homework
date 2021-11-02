@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var flag = true
+        var arr = [0, 1, 2, 3, 4, 5, 0, 1]
+        function func(flag) {
+            if (flag === true) { return 1 }
+            else { return 0 }
+        }
+        console.log(func(flag));
+
+        function func2(arr) {
+            let res = []
+            let length = arr.length
+            for (let i = 0; i < length; i++) {
+                if (arr[i] === 5) {
+                    break
+                } else {
+                    res.push(arr[i])
+                }
+            }
+            return res
+        }
+        console.log(func2(arr))
+
+        function func3(arr) {
+            let res = []
+            let length = arr.length
+            for (let i = 0; i < length; i++) {
+                if (arr[i] === 5) {
+                    continue
+                } else {
+                    res.push(arr[i])
+                }
+            }
+            return res
+        }
+        console.log(func3(arr))
+
+        function func4(arr) {
+            let res = []
+            let length = arr.length
+            for (let i = 0; i < length; i++) {
+                res.push(`元素${arr[i]}`)
+            }
+            return res
+        }
+        console.log(func4(arr))
+    </script>
+</body>
+
+</html>
