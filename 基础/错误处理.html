@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        function a() {
+            throw new Error("An error")
+        }
+        function b() {
+            a();
+        }
+        try {
+            b()
+        } catch (err) {
+            console.log(err)
+        }
+
+        function asyncTask() {
+            return new Promise((resole, reject) => {
+                setTimeout(() => {
+                    reject(new Error("An error"))
+                }, 1000)
+            })
+        }
+        async function main() {
+            try {
+                await asyncTask()
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        main()
+
+        function divider(x = 0, y = 0) {
+            try {
+                if (y === 0) {
+                    throw new Error('被除数不能为0')
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        divider(77)
+
+        document.write('<ul><li>1</li><li>2</li><li>3</li></ul>')
+    </script>
+</body>
+
+</html>
