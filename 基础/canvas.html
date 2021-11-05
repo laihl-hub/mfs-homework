@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            background-color: lightsteelblue;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="300px" height="300px" style="background-color: antiquewhite;"></canvas>
+    <script>
+        var canvas = document.getElementById('canvas')
+        var context = canvas.getContext('2d')
+
+        function draw() {
+            context.clearRect(0, 0, 300, 300)
+            var now = new Date()
+            var hour = now.getHours()
+            var minute = now.getMinutes()
+            var second = now.getSeconds()
+            hour = hour + minute / 60
+            hour = hour > 12 ? hour - 12 : hour
+
+            context.save()
+            context.translate(150, 150)
+
+            context.lineCap = 'round'
+            // context.scale(1, -1)
+
+            context.save()
+            context.lineWidth = 8
+            context.strokeStyle = 'lightsteelblue'
+            context.beginPath()
+            context.arc(0, 0, 100, 0, 2 * Math.PI, false)
+            context.stroke()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.lineWidth = 4
+            context.strokeStyle = 'black'
+            context.beginPath()
+            for (let i = 0; i < 12; i++) {
+                let deg = Math.PI / 6 * i
+                let x = 85 * Math.sin(deg)
+                let y = 85 * Math.cos(deg)
+                context.moveTo(x, y)
+                context.lineTo(0.88 * x, 0.88 * y)
+            }
+            context.stroke()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.lineWidth = 2
+            context.beginPath()
+            for (let i = 0; i < 60; i++) {
+                let deg = Math.PI / 30 * i
+                let x = 85 * Math.cos(deg)
+                let y = 85 * Math.sin(deg)
+                context.moveTo(x, y)
+                context.lineTo(0.95 * x, 0.95 * y)
+            }
+            context.stroke()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.lineWidth = 4.5
+            context.beginPath()
+            let hourdeg = Math.PI / 6 * hour - Math.PI / 2
+            context.moveTo(-8 * Math.cos(hourdeg), -8 * Math.sin(hourdeg))
+            context.lineTo(40 * Math.cos(hourdeg), 40 * Math.sin(hourdeg))
+            context.stroke()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.lineWidth = 4
+            context.beginPath()
+            let minutedeg = Math.PI / 30 * minute - Math.PI / 2
+            context.moveTo(-10 * Math.cos(minutedeg), -10 * Math.sin(minutedeg))
+            context.lineTo(50 * Math.cos(minutedeg), 50 * Math.sin(minutedeg))
+            context.stroke()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.lineWidth = 3
+            context.strokeStyle = 'lightPink'
+            context.beginPath()
+            let seconddeg = Math.PI / 30 * second - Math.PI / 2
+            context.moveTo(-15 * Math.cos(seconddeg), -15 * Math.sin(seconddeg))
+            context.lineTo(60 * Math.cos(seconddeg), 60 * Math.sin(seconddeg))
+            context.stroke()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.beginPath()
+            context.lineWidth = 3
+            context.strokeStyle = 'lightPink'
+            context.arc(0, 0, 3, 0, 2 * Math.PI, false)
+            context.fillStyle = 'black'
+            context.fill()
+            context.stroke()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.beginPath()
+            context.lineWidth = 3
+            context.strokeStyle = 'lightPink'
+            context.arc(60 * Math.cos(seconddeg), 60 * Math.sin(seconddeg), 5, 0, 2 * Math.PI, false)
+            context.fillStyle = 'antiquewhite'
+            context.fill()
+            context.stroke()
+            context.closePath()
+            context.restore()
+
+            context.translate(-150, -150)
+        }
+        draw()
+        setInterval(draw, 1000);
+    </script>
+</body>
+
+</html>
