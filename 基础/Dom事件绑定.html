@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .tabs {
+            display: flex;
+            width: 300px;
+        }
+
+        .tab {
+            width: 100px;
+            height: 50px;
+            background-color: lightskyblue;
+            border: 1px solid lightsteelblue;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .content {
+            width: 300px;
+            height: 100px;
+            background-color: lightgray;
+        }
+
+        .content div {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- tab标签 -->
+    <div class="tabs">
+        <div class="tab">tab 1</div>
+        <div class="tab">tab 2</div>
+        <div class="tab">tab 3</div>
+    </div>
+    <div class="content">
+        <div>tab1's content</div>
+        <div>tab2's content</div>
+        <div>tab3's content</div>
+    </div>
+
+    <div id="award" style="margin-top: 50px;">点击“开始”按钮，开始抽奖！</div>
+    <div class="action" style="margin-top: 10px;">
+        <button id="start">开始</button>
+        <button id="stop">停止</button>
+    </div>
+    <script>
+        // tab标签
+        var tabs = document.getElementsByClassName('tab')
+        var contents = document.querySelectorAll('.content div')
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].onclick = (function (index) {
+                return function (event) {
+                    for (let j = 0; j < tabs.length; j++) {
+                        tabs[j].style.backgroundColor = 'lightskyblue'
+                    }
+                    event.target.style.backgroundColor = 'lightPink'
+                    for (let j = 0; j < contents.length; j++) {
+                        contents[j].style.display = 'none'
+                    }
+                    contents[index].style.display = 'block'
+                }
+            })(i)
+
+            tabs[i].onmouseover = function (event) {
+                event.target.style.cursor = 'pointer'
+            }
+        }
+
+
+        var award = document.getElementById('award')
+        var arr = ['特等奖', '一等奖', '二等奖', '三等奖', '鼓励奖']
+        var startBtn = document.getElementById('start')
+        var stopBtn = document.getElementById('stop')
+        var timerId = null
+        function start() {
+            let element = award
+            let random = Math.floor(Math.random() * 100)
+            let index
+            if (random === 0) {
+                index = 0
+            } else if (0 < random && random < 11) {
+                index = 1
+            } else if (random >= 11 && random < 41) {
+                index = 2
+            } else if (random >= 41 && random < 81) {
+                index = 3
+            } else {
+                index = 4
+            }
+            element.innerText = `${arr[index]}`
+        }
+        startBtn.onclick = function () {
+            timerId = setInterval(start, 50)
+        }
+        stopBtn.onclick = function () {
+            clearInterval(timerId)
+        }
+    </script>
+</body>
+
+</html>
