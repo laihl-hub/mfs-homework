@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./iconfont/iconfont.css">
+    <style>
+        .banner {
+            background-image: url(https://work.mafengshe.com/static/imgs/banner.jpg);
+            text-align: center;
+            height: 270px;
+            margin-top: -1px;
+        }
+
+        .list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            height: 474px;
+        }
+
+        .item {
+            position: relative;
+            width: 22%;
+            height: 148px;
+            background-color: #4cd8e0;
+            margin: 10px 10px 0 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .item .no {
+            background-color: #20b6d2;
+            text-align: center;
+            height: 70px;
+            line-height: 70px;
+            width: 70px;
+            border-radius: 50%;
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .item .item_bot {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            height: 45px;
+            line-height: 45px;
+            background-color: #00474c;
+            color: #fff;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .info {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            color: white;
+        }
+
+        .info .iconfont {
+            font-size: 20px;
+        }
+
+        .smile {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        .smile .iconfont {
+            font-size: 40px;
+            color: white;
+        }
+
+        .pager {
+            text-align: center;
+        }
+
+        .pager a {
+            margin: 10px;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: lightgray;
+            margin: 20px 2px;
+        }
+
+        .pager a:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner"></div>
+    <div class="list"></div>
+    <div class="pager"></div>
+
+    <script>
+        function createElement(no, title, viewTimes, replyTimes) {
+            var dom = document.createElement('div')
+            dom.setAttribute('class', 'item')
+            var html = `
+            <div class="no">${no}</div>
+            <div class="info">
+                <span><i class="iconfont icon-eye"></i>${viewTimes}</span>
+                <span><i class="iconfont icon-message"></i>${replyTimes}</span>
+            </div>
+            <div class="smile">
+                <i class="iconfont icon-smile"></i>
+            </div>
+            <div class="item_bot">${title}</div>`
+            dom.innerHTML = html
+            return dom
+        }
+        var data = []
+        for (let i = 0; i < 100; i++) {
+            data.push({ no: i, title: 'agvdv' + i, viewTimes: 100 + i, replyTimes: 25 + i })
+        }
+        var pager = document.getElementsByClassName('pager')[0]
+        for (let i = 0; i < Math.ceil(data.length / 12); i++) {
+            var a = document.createElement('a')
+            a.innerText = i + 1
+            pager.appendChild(a)
+        }
+        function getData(page) {
+            return data.slice(page * 12, page * 12 + 12)
+        }
+        var List = document.getElementsByClassName('list')[0]
+
+        function fillDom(page) {
+            while (List.hasChildNodes()) {
+                List.removeChild(List.lastChild)
+            }
+            let data = getData(page)
+            let doms = data.map((i) => createElement(i.no, i.title, i.viewTimes, i.replyTimes))
+            doms.forEach((i) => {
+                List.appendChild(i)
+            })
+        }
+        fillDom(0)
+        var pages = document.querySelectorAll('.pager a')
+        for (let i = 0; i < pages.length; i++) {
+            pages[i].addEventListener('click', (event) => {
+                for (let j = 0; j < pages.length; j++) {
+                    pages[j].style.backgroundColor = 'lightGrey'
+                }
+                event.target.style.backgroundColor = 'lightPink'
+                fillDom(i)
+            })
+        }
+
+    </script>
+</body>
+
+</html>

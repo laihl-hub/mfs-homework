@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="signin" action="#" target="_blank" onsubmit="return onFormSubmit()">
+        <p id="sigin-error" style="color:red"></p>
+        <p>
+            用户名: <input type="text" id="username" name="username">
+        </p>
+        <p>
+            口令: <input type="password" id="password" name="password">
+        </p>
+        <p>
+            重复口令: <input type="password" id="password-2">
+        </p>
+        <p>
+            <button type="submit">提交</button> <button type="reset">重置</button>
+        </p>
+    </form>
+
+    <script>
+        function onFormSubmit() {
+            var sigin_error = document.getElementById('sigin-error')
+            var username = document.getElementById('username')
+            var password = document.getElementById('password')
+            var password_2 = document.getElementById('password-2')
+            var usernameReg = /^[a-zA-Z]([a-zA-Z0-9_]{5,15})$/
+            var passwordReg = /([a-zA-Z0-9_@#$%^&*~!?]{8,20})$/
+            console.log(username.value);
+            if (!usernameReg.test(username.value)) {
+                sigin_error.innerText = '用户名需以字母开头，6-16个英文字符，数字或下划线'
+                return false
+            }
+            if (!passwordReg.test(password.value)) {
+                sigin_error.innerText = '口令需要8-20个字符，英文字符，数字，下划线或特殊符号'
+                return false
+            }
+            if (password_2.value != password.value) {
+                sigin_error.innerText = '重复口令需要与口令一致'
+                return false
+            }
+            return true
+        }
+    </script>
+</body>
+
+</html>
