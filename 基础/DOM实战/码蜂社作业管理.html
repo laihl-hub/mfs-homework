@@ -111,6 +111,8 @@
     <div class="pager"></div>
 
     <script>
+        console.log(window.innerHeight);
+        console.log(window.outerHeight);
         function createElement(no, title, viewTimes, replyTimes) {
             var dom = document.createElement('div')
             dom.setAttribute('class', 'item')
@@ -160,6 +162,7 @@
                     pages[j].style.backgroundColor = 'lightGrey'
                 }
                 event.target.style.backgroundColor = 'lightPink'
+                console.log(event.target.style.width);
                 fillDom(i)
             })
         }

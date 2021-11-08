@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./iconfont/iconfont.css">
+    <style>
+        .goodList {
+            width: 100%;
+            /* height: 300px; */
+            background-color: antiquewhite;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .item_box {
+            width: 200px;
+            border: 1px solid beige;
+            background-color: azure;
+            margin: 10px;
+        }
+
+        .item_content {
+            width: 180px;
+            height: 200px;
+            margin: 10px auto;
+        }
+
+        .item_content img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .item_title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .item_title .iconfont {
+            font-size: 20px;
+        }
+
+        #shoppingCart {
+            margin-top: 20px;
+            width: 50%;
+            /* height: 300px; */
+            background-color: lightblue;
+            padding-top: 10px;
+        }
+
+        .cartItemBox {
+            width: 80%;
+            height: 120px;
+            margin: 10px 20px;
+            background-color: lightcyan;
+            border: 1px solid lightpink;
+            display: flex;
+        }
+
+        .item_img {
+            width: 100px;
+            height: 100px;
+            margin: 10px 10px;
+        }
+
+        .item_img img {
+            width: 100%;
+            height: 100%;
+            background-color: wheat;
+        }
+
+        .item_info {
+            padding-left: 10px;
+            flex: 1;
+            background-color: white;
+            margin: 10px 0;
+        }
+
+        .item_info span {
+            display: block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="goodList">商品
+        <div class="item_box">
+            <div class="item_content">
+                <img src="../../image/商品1.jpg" alt="商品1">
+            </div>
+            <div class="item_title" index='0'>商品1
+                <button><i class="iconfont icon-increase"></i></button>
+            </div>
+        </div>
+        <div class="item_box">
+            <div class="item_content">
+                <img src="../../image/商品2.jpg" alt="商品2">
+            </div>
+            <div class="item_title" index='1'>商品2
+                <button><i class="iconfont icon-increase"></i></button>
+            </div>
+        </div>
+        <div class="item_box">
+            <div class="item_content">
+                <img src="../../image/商品3.jpg" alt="商品3">
+            </div>
+            <div class="item_title" index='2'>商品3
+                <button><i class="iconfont icon-increase"></i></button>
+            </div>
+        </div>
+        <div class="item_box">
+            <div class="item_content">
+                <img src="../../image/商品4.jpg" alt="商品4">
+            </div>
+            <div class="item_title" index='3'>商品4
+                <button><i class="iconfont icon-increase"></i></button>
+            </div>
+        </div>
+        <div class="item_box">
+            <div class="item_content">
+                <img src="../../image/商品5.jpg" alt="商品5">
+            </div>
+            <div class="item_title" index='4'>商品5
+                <button><i class="iconfont icon-increase"></i></button>
+            </div>
+        </div>
+    </div>
+    <div id="shoppingCart">购物车</div>
+
+
+    <script>
+        var addBtns = document.querySelectorAll('.goodList>.item_box button')
+        var shoppingCart = document.getElementById('shoppingCart');
+        var goodsInfo = [
+            [0, '商品1', 0, '../../image/商品1.jpg'],
+            [1, '商品2', 0, '../../image/商品2.jpg'],
+            [2, '商品3', 0, '../../image/商品3.jpg'],
+            [3, '商品4', 0, '../../image/商品4.jpg'],
+            [4, '商品5', 0, '../../image/商品5.jpg']
+        ]
+        var itemDom = {}
+        var html = ''
+        var shoppingInfo = {}
+        for (const key in sessionStorage) {
+            // console.log(typeof JSON.parse(sessionStorage[key]));
+            if (typeof sessionStorage[key] === 'string') {
+                let obj = JSON.parse(sessionStorage[key])
+                console.log(obj);
+                itemDom = document.createElement('div')
+                html = `<div class="cartItemBox" Cartindex='${obj.index}'>
+                        <div class="item_img">
+                            <img src="${obj.src}" alt="${obj.name}">
+                            </div>
+                            <div class="item_info">
+                                <span>${obj.name}
+                                    <button><i class="iconfont icon-delete"></i></button>
+                                </span>
+                                <span>数量：${obj.num}</span>
+                            </div>
+                        </div>`
+                itemDom.innerHTML = html
+                shoppingCart.appendChild(itemDom)
+                shoppingInfo[obj.index] = obj
+            }
+        }
+        var delBtns = document.querySelectorAll('.cartItemBox>.item_info button')
+        for (let i = 0; i < delBtns.length; i++) {
+            delBtns[i].addEventListener('click', (e) => {
+                let delDom = e.currentTarget.parentNode.parentNode.parentNode
+                let delIndex = delDom.getAttribute('Cartindex')
+                // shoppingCart.removeChild(delDom)
+                // console.log(delIndex);
+                delDom.parentNode.innerHTML = ''
+                sessionStorage.removeItem(delIndex)
+                delete shoppingInfo[delIndex]
+            })
+        }
+        // sessionStorage.setItem('buy1', JSON.stringify(buyInfo[0]))
+        // console.log(sessionStorage.buy1);
+        for (let i = 0; i < addBtns.length; i++) {
+            addBtns[i].addEventListener('click', (e) => {
+                let index = e.currentTarget.parentNode.getAttribute('index')
+                // let name = goodsInfo[index][1]
+                if (shoppingInfo[index] === undefined) {
+                    shoppingInfo[index] = {
+                        index: index,
+                        name: goodsInfo[index][1],
+                        num: 1,
+                        src: goodsInfo[index][3]
+                    }
+                    itemDom = document.createElement('div')
+                    html = `<div class="cartItemBox" Cartindex='${shoppingInfo[index].index}'>
+                        <div class="item_img">
+                            <img src="${shoppingInfo[index].src}" alt="${shoppingInfo[index].name}">
+                            </div>
+                            <div class="item_info">
+                                <span>${shoppingInfo[index].name}
+                                    <button><i class="iconfont icon-delete"></i></button>
+                                </span>
+                                <span>数量：${shoppingInfo[index].num}</span>
+                            </div>
+                        </div>`
+                    itemDom.innerHTML = html
+                    shoppingCart.appendChild(itemDom)
+                    // sessionStorage.setItem(name, JSON.stringify(shoppingInfo[name]))
+                    // console.log(sessionStorage);
+
+                } else {
+                    var shopitem = document.querySelector(`div[Cartindex='${index}']`)
+                    shopitem.children[1].children[1].innerHTML = '数量：' + ++shoppingInfo[index].num
+
+                }
+                sessionStorage.setItem(index, JSON.stringify(shoppingInfo[index]))
+                console.log(sessionStorage)
+            })
+        }
+
+
+        // console.log(delBtns);
+    </script>
+</body>
+
+</html>
