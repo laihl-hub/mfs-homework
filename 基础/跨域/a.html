@@ -15,20 +15,7 @@
         window.onload = function () {
             document.domain = 'test.com'
         }
-        var start = new Date()
-        setInterval(() => {
-            for (let i = 0; i < 1000 * 1000 * 1000; i++);
-            var end = new Date()
-            console.log(end - start);
-            start = end
-        }, 100)
     </script>
-    <script>
-        function callback(data) {
-            console.log(data);
-        }
-    </script>
-    <script src="http://b.test.com:8080/%E5%9F%BA%E7%A1%80/%E8%B7%A8%E5%9F%9F/index.js"></script>
 </body>
 
 </html>
