@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function mySetInterval(fn, delay) {
+            setTimeout(() => {
+                fn()
+                mySetInterval(fn, delay)
+            }, delay)
+        }
+        var start1 = new Date()
+        let id = setInterval(() => {
+            var end1 = new Date()
+            console.log('setinterval', end1 - start1, 'ms');
+            start1 = end1
+            for (var i = 0; i < 10000 * 10000; i++);
+            console.log(id);
+        }, 1000);
+
+
+        var start2 = new Date()
+        mySetInterval(() => {
+            var end2 = new Date()
+            console.log('myinterval', end2 - start2, 'ms');
+            start2 = end2
+            for (var i = 0; i < 10000 * 10000; i++);
+        }, 1000)
+    </script>
+</body>
+
+</html>
