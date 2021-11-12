@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let date = new Date('2017-03-05 10:03:08')
+        let str = `${date.getFullYear()}-0${date.getMonth() + 1}-0${date.getDate()} ${date.getHours()}:0${date.getMinutes()}:0${date.getSeconds()}`
+        console.log(str);
+
+        function isInCircle(x, y) {
+            let X = 1, Y = 1//圆心
+            let r = 1//半径
+            let d = Math.sqrt((x - X) * (x - X) + (y - Y) * (y - Y))
+            if (d < r) {
+                return true
+            } else {
+                return false
+            }
+        }
+        console.log(isInCircle(1.5, 1))
+    </script>
+</body>
+
+</html>
