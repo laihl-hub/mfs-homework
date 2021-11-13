@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function Animal(name) {
+            this.name = name
+        }
+        Animal.prototype.eat = function () {
+            console.log('eat something');
+        }
+        Animal.prototype.sleep = function () {
+            console.log('have a sleep');
+        }
+        function Dog(name) {
+            this.name = name
+        }
+        function Cat(name) {
+            this.name = name
+        }
+        function Human(name) {
+            this.name = name
+        }
+        Dog.prototype = new Animal()
+        Dog.prototype.bark = function () {
+            console.log('I can bark:"wang wang"');
+        }
+        Cat.prototype = new Animal()
+        Cat.prototype.bark = function () {
+            console.log('I can bark:"miao miao"');
+        }
+        Human.prototype = new Animal()
+        Human.prototype.speak = function () {
+            console.log('I can speak');
+        }
+        var dog = new Dog('dog')
+        var cat = new Cat('cat')
+        var human = new Human('human')
+        dog.bark()
+        cat.bark()
+        human.speak()
+    </script>
+</body>
+
+</html>
