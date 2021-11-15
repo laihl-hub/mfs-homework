@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .content {
+            width: 80%;
+            height: 1600px;
+            background-color: antiquewhite;
+            margin: 0 auto;
+        }
+
+        button {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: aquamarine;
+            font-size: 20px;
+            width: 40px;
+            height: 50px;
+        }
+
+        .back-top {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content"></div>
+    <button class="back-top">^</button>
+
+    <script>
+
+        // 1. 回到顶部效果
+        function backTop(node) {
+            var timer
+            node.addEventListener('click', () => {
+                window.scrollTo(0, 0)
+            })
+            window.onscroll = function () {
+                clearTimeout(timer)
+                timer = setTimeout(function () {
+                    var windowH = window.innerHeight
+                    console.log(windowH);
+                    var scrollTop = window.scrollY
+                    console.log(scrollTop);
+                    if (scrollTop > windowH * 0.5) {
+                        node.setAttribute('class', 'show')
+                    }
+                    if (scrollTop < windowH * 0.5) {
+                        node.setAttribute('class', 'back-top')
+                    }
+                }, 50)
+            }
+        }
+        var ele = document.getElementsByClassName('back-top')[0]
+        new backTop(ele)
+
+
+        // 2. 手动实现instanceOf(obj,clazz)函数   instanceof操作符主要是查找该构造函数的原型是否在对象的原型链上
+        function instanceOf(obj, clazz) {
+            let proto = obj.__proto__
+            let prototype = clazz.prototype
+            while (proto) {
+                if (proto === prototype) {
+                    return true
+                }
+                proto = proto.__proto__
+            }
+            return false
+        }
+        // 3. 手动实现工厂模式
+        function createDog(name, color) {
+            var obj = new Object()
+            obj.name = name
+            obj.color = color
+            obj.say = function () {
+                console.log("我是一只" + this.color + "的" + this.name);
+            }
+            return obj
+        }
+        var dog1 = createDog('牧羊犬', '黑色')
+        dog1.say()
+        var dog2 = createDog('阿拉斯加', '黑白色')
+        dog2.say()
+        // 4. 手动实现单例模式
+        function Singleton(name) {
+            this.name = name
+            this.instance = null
+        }
+        Singleton.prototype.getName = function () {
+            console.log(this.name);
+        }
+        function createInstance(name) {
+            if (!this.instance) {
+                this.instance = new Singleton(name)
+            }
+            return this.instance
+        }
+        var a = createInstance('aaa')
+        var b = createInstance('bbb')
+        console.log(a === b);
+        b.getName()
+
+
+        // 5. 实现继承   使用寄生式组合继承
+        function inheritPrototype(subType, superType) {
+            let prototype = Object.create(superType.prototype)
+            prototype.constructor = subType
+            subType.prototype = prototype
+        }
+        function Animal(name) {
+            this.name = name
+        }
+        Animal.prototype.eat = function () {
+            console.log('Animals can eat');
+        }
+        Animal.prototype.sleep = function () {
+            console.log('Animals can sleep');
+        }
+        function Human(name) {
+            Animal.call(this, name)
+        }
+        inheritPrototype(Human, Animal)
+        Human.prototype.eat = function () {
+            console.log(this.name + ' eat many things');
+        }
+        Human.prototype.sleep = function () {
+            console.log(this.name + ' sleep 8 hours everyday');
+        }
+        var human = new Human('human')
+        human.eat()
+        human.sleep()
+
+        function Dog(name) {
+            Animal.call(this, name)
+        }
+        inheritPrototype(Dog, Animal)
+        Dog.prototype.eat = function () {
+            console.log(this.name + ' eat Dog Food');
+        }
+        Dog.prototype.sleep = function () {
+            console.log(this.name + ' can sleep all day ');
+        }
+        var dog = new Dog('dog')
+        dog.eat()
+        dog.sleep()
+        console.log(dog.__proto__.__proto__ === Animal.prototype);
+
+        console.log(dog instanceof Dog);
+        console.log(dog instanceof Human);
+        console.log(dog instanceof Animal);
+        console.log(dog instanceof Object);
+        console.log(Dog instanceof Function);
+        console.log(instanceOf(dog, Dog));
+        console.log(instanceOf(dog, Human));
+        console.log(instanceOf(dog, Animal));
+        console.log(instanceOf(dog, Object));
+        console.log(instanceOf(Dog, Function));
+    </script>
+</body>
+
+</html>
