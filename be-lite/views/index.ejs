@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>express</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+</head>
+
+<body>
+  用户名：<input type="text" id="username" name="username"><br>
+  密码：<input type="password" id="password" name="password"><br>
+  <button>提交</button>
+
+  <script>
+    var btn = document.getElementsByTagName('button')[0]
+    btn.addEventListener('click', function () {
+      var username = document.getElementById('username')
+      var password = document.getElementById('password')
+      var obj = {
+        usname: username.value,
+        pwd: password.value
+      }
+      $.ajax({
+        type: 'POST',
+        url: 'http://b.test.com:3000/regist',
+        dataType: 'json',
+        data: obj,
+        success: function (res) {
+          if (res.errno === 1) {
+            alert(res.errmsg)
+          } else {
+            alert('注册成功')
+          }
+        }
+      })
+
+    })
+
+    //   $.ajax({
+    //     url: 'http://b.test.com:3000/json',
+    //     success: function (data) {
+    //       console.log(data);
+    //     }
+    //   })
+    // })
+
+
+
+
+  </script>
+</body>
+
+</html>
