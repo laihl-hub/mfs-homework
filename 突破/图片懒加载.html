@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <style>
+        img {
+            margin-bottom: 20px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <img data-src="../image/商品2.jpg" width="300px" height="300px">
+    <img data-src="../image/商品3.jpg" width="300px" height="300px">
+    <img data-src="../image/商品5.jpg" width="300px" height="300px">
+    <img data-src="../image/suli.jpg" width="500px" height="300px">
+    <img data-src="../image/商品1.jpg" width="300px" height="300px">
+    <script>
+        var timer = null
+        var $img = $('img')
+
+        function LazyImg($node) {
+            var node = $node
+            console.log($node);
+            function isShow(img) {
+                var windowH = $(window).height()
+                var scrollTop = $(document).scrollTop()
+                var nodeOT = img.offsetTop
+                console.log(nodeOT);
+                var nodeH = img.height
+                return nodeOT <= windowH + scrollTop && scrollTop <= nodeOT + nodeH
+            }
+            Array.from(node).forEach((e) => {
+                if (isShow(e)) {
+                    console.log(e);
+                    e.setAttribute('src', e.dataset.src)
+                } else {
+                    e.removeAttribute('src')
+                }
+            })
+            window.onscroll = function () {
+                if (timer) {
+                    clearTimeout(timer)
+                }
+                timer = setTimeout(() => {
+                    Array.from(node).forEach((e) => {
+                        if (isShow(e)) {
+                            console.log(e);
+                            e.setAttribute('src', e.dataset.src)
+                        } else {
+                            e.removeAttribute('src')
+                        }
+                    })
+                }, 10)
+
+            }
+        }
+        new LazyImg($img)
+    </script>
+</body>
+
+</html>
