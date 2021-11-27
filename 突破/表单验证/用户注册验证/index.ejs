@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .valid {
+      display: none;
+    }
+
+    .valid.show {
+      display: inline-block;
+      color: red;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+</head>
+
+<body>
+  <form action="/signup">
+    username:<input type="text" id="username" oninput="usernameChange()" pattern="^[a-zA-Z]\w{5,17}$">
+    <div class="username valid"></div><br>
+    password:<input type="password" id="password" oninput="passwordChange()" pattern="^\w{6,18}$">
+    <div class="password valid"></div><br>
+    确认密码:<input type="password" id="repeatPassword" oninput="repeatChange()">
+    <div class="repeat valid"></div><br>
+    <input type="submit">
+  </form>
+  <script>
+    var username = document.getElementById('username')
+    var password = document.getElementById('password')
+    var repeatPassword = document.getElementById('repeatPassword')
+    var timer1
+    var timer2
+    var timer3
+    function usernameChange() {
+      var usernameValid = $('.username.valid')
+      clearTimeout(timer1)
+      timer1 = setTimeout(() => {
+        if (username.validity.patternMismatch === true) {
+          usernameValid[0].innerText = '请输入以字母开头的6-18个字符'
+          usernameValid.addClass('show')
+        } else {
+          usernameValid.removeClass('show')
+          $.ajax({
+            method: 'post',
+            url: '/regist',
+            data: { username: username.value },
+            success: function (res) {
+              if (res.exsit) {
+                usernameValid[0].innerText = '用户名已存在'
+                usernameValid.addClass('show')
+              } else {
+                usernameValid.removeClass('show')
+              }
+            }
+          })
+        }
+      }, 500)
+    }
+    function passwordChange() {
+      var passwordValid = $('.password.valid')
+      clearTimeout(timer2)
+      timer2 = setTimeout(() => {
+        if (password.validity.patternMismatch === true) {
+          passwordValid[0].innerText = '请输入6-18个字符'
+          passwordValid.addClass('show')
+        } else {
+          passwordValid.removeClass('show')
+        }
+      }, 500)
+    }
+    function repeatChange() {
+      var repeatValid = $('.repeat.valid')
+      clearTimeout(timer3)
+      timer3 = setTimeout(() => {
+        if (repeatPassword.value != password.value) {
+          repeatValid[0].innerText = '请确认密码是否正确'
+          repeatValid.addClass('show')
+        } else {
+          repeatValid.removeClass('show')
+        }
+      }, 500)
+    }
+  </script>
+</body>
+
+</html>
