@@ -103,31 +103,52 @@
                 }
             })
         }
+        function loadPic(node) {
+            return new Promise((resolve, reject) => {
+                node.on("load", () => {
+                    // console.log(node);
+                    resolve("图片已加载")
+                })
+                node.on("error", () => {
+                    reject("图片加载失败")
+                })
+            })
 
+        }
+        function init(nodes) {
+            newsWidth = nodes[0].outerWidth(true)
+            // console.log(newsWidth);
+            var containerWidth = $(".waterfall").width()
+            var colNum = Math.floor(containerWidth / newsWidth);
+            if (heights.length == 0) {
+                while (colNum--)
+                    heights.push(0)
+            }
+        }
+        function waterfallNode(nodes) {
+            nodes.forEach(ele => {
+                var col = findMinIndex(heights)
+                ele.css({
+                    top: heights[col] + "px",
+                    left: col * newsWidth + "px"
+                })
+                heights[col] += ele.outerHeight(true);
+            })
+            $(".waterfall").height(heights.reduce((i, j) => i < j ? j : i))
+        }
         function waterfall(nodes) {
             var lens = nodes.map(i => i.find("img").length).reduce((i, j) => i + j);
+            var promises = []
             nodes.forEach(ele => {
-                ele.find("img").on("load", () => {
-                    if (!--lens) {
-                        newsWidth = ele.outerWidth(true)
-                        var containerWidth = $(".waterfall").width()
-                        var colNum = Math.floor(containerWidth / newsWidth);
-                        if (heights.length == 0) {
-                            while (colNum--)
-                                heights.push(0)
-                        }
-                        nodes.forEach(ele => {
-                            var col = findMinIndex(heights)
-                            ele.css({
-                                top: heights[col] + "px",
-                                left: col * newsWidth + "px"
-                            })
-                            heights[col] += ele.outerHeight(true);
-
-                        })
-                        $(".waterfall").height(heights.reduce((i, j) => i < j ? j : i))
-                    }
-                })
+                if (ele.find("img").length) {
+                    // console.log(ele.find("img"));
+                    promises.push(loadPic(ele.find("img")))
+                }
+            })
+            Promise.all(promises).then(value => {
+                // console.log(value);
+                init(nodes)
+                waterfallNode(nodes)
             })
             nodes.forEach(ele => {
                 $(".waterfall").append(ele[0]);
@@ -148,23 +169,8 @@
             clearTimeout(timer)
             timer = setTimeout(function () {
                 heights.length = 0
-                newsWidth = lis[0].outerWidth(true)
-                var containerWidth = $(".waterfall").width()
-                var colNum = Math.floor(containerWidth / newsWidth);
-                if (heights.length == 0) {
-                    while (colNum--)
-                        heights.push(0)
-                }
-                lis.forEach(ele => {
-                    var col = findMinIndex(heights)
-                    ele.css({
-                        top: heights[col] + "px",
-                        left: col * newsWidth + "px"
-                    })
-                    heights[col] += ele.outerHeight(true);
-
-                })
-                $(".waterfall").height(heights.reduce((i, j) => i < j ? j : i))
+                init(lis)
+                waterfallNode(lis)
             }, 100);
         }
         function isShow($node) {
