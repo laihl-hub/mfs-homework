@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>{{str}}</h2>
+        <div style="width: 100px;height: 150px;background-color: rosybrown;">ul
+            <ul v-if="isShow">
+                <item v-for="i in list" :data="i"></item>
+            </ul>
+        </div>
+        <button @click="change">{{state}}</button>
+        <div>{{number}}</div>
+        <button @click="add">计数器+1</button>
+    </div>
+    <script>
+        Vue.component("item", {
+            props: ["data"],
+            created: function () {
+                console.log("created");
+            },
+            destroyed: function () {
+                console.log("destroyed");
+            },
+            template: "<li>{{data}}</li>"
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                str: 'hello Vue',
+                list: ['lili', 'sisi', 'xixi', 'zizi'],
+                number: 0,
+                isShow: false,
+                state: '显示ul内容'
+            },
+            methods: {
+                add: function () {
+                    this.number++
+                },
+                change: function () {
+                    if (this.isShow) {
+                        this.state = '显示ul内容'
+                    } else {
+                        this.state = '删除ul内容'
+
+                    }
+                    this.isShow = !this.isShow
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
