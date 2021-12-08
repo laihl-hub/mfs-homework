@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <style>
+        .active {
+            color: lightcoral;
+            font-size: larger;
+        }
+
+        .box {
+            width: 100px;
+            width: 100px;
+            background-color: lightcoral;
+        }
+
+        .box img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1. 请使用属性绑定实现一个 <img>的src属性每隔1s自动变换，以实现图片自动切换。
+
+         2. 请自行查阅文档实现：当用户提交表单时，防止页面刷新，并在组件内部使用ajax方式提交表单。
+
+         3. 请实现 filter uppercase 实现将输入字符串转化为大写形式,并在模板中使用这个 filter
+
+         4. 假设 Component 中有 data:{firstName: 'Foo', lastName: 'Bar'}，请实现模板中 <div>{{fullname}}</div> 的 fullname 会当 firstName，lastName 任意一个改变时而改变
+
+         5. 假设 Component 中有 data:{isActive: true}，请实现模板中某个 div class active根据 isActive 变化而变化。 -->
+    <div id="app">
+
+        <div class="box">
+            <img :src="imgSrcs[index]" alt="">
+        </div><br>
+
+
+        <form action="" onsubmit="return false">
+            姓名：<input type="text" v-model="username">
+            密码：<input type="password" v-model="password">
+            <button type="button" @click="submit">提交</button>
+        </form><br>
+
+
+        <h3>{{title|uppercase}}</h3><br>
+
+
+        <div :class="{active:isActive}">{{fullname}}</div>
+        <input type="text" v-model="firstName">
+        <input type="text" v-model="lastName">
+        <button @click="change">改变样式</button>
+
+
+
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                title: 'welcome to vue',
+                firstName: 'Foo',
+                lastName: 'Bar',
+                isActive: true,
+                imgSrcs: ['../../image/49.png', '../../image/50.png', '../../image/51.png', '../../image/52.png', '../../image/53.png'],
+                index: 0,
+                username: '',
+                password: ''
+            },
+            filters: {
+                uppercase: function (str) {
+                    if (!str) return ''
+                    return str.toUpperCase()
+                }
+            },
+            computed: {
+                fullname: function () {
+                    return this.firstName + ' ' + this.lastName
+                },
+            },
+            methods: {
+                change: function () {
+                    this.isActive = !this.isActive
+                },
+                show: function () {
+                    setInterval(() => {
+                        this.index = (this.index + 1) % this.imgSrcs.length
+                    }, 1000)
+                },
+                submit: function () {
+                    $.ajax({
+                        method: 'post',
+                        url: 'http:a.test.com:8000/regist',
+                        data: { username: this.username, password: this.password },
+                        success: function (res) {
+                            console.log(res);
+                        }
+                    })
+                }
+            },
+            mounted: function () {
+                this.show()
+            }
+        })
+    </script>
+</body>
+
+</html>
