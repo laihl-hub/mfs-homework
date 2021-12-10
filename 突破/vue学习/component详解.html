@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent {
+            background-color: lightcoral;
+            padding: 10px;
+            font-size: larger
+        }
+
+        .child {
+            background-color: rgb(171, 205, 221);
+            padding: 10px;
+            font-size: small
+        }
+
+        .sep {
+            border: 1px solid lightgray;
+            margin: 10px 0;
+        }
+
+        .box {
+            width: 200px;
+            height: 50px;
+            background-color: burlywood;
+        }
+
+        header,
+        footer {
+            height: 50px;
+            background-color: lightgoldenrodyellow;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <container>
+            <parent slot="content1"></parent>
+            <div slot="content2" class="box">
+                <asynccontent></asynccontent>
+            </div>
+
+        </container>
+    </div>
+    <script>
+        Vue.component('parent', {
+            data() {
+                return {
+                    content: 'hello prop',
+                    a: 0
+                }
+            },
+            methods: {
+                childadd() {
+                    this.a++
+                }
+            },
+            template: `<div class="parent">
+                {{a}}
+                <child :message="content" @add="childadd"></child>
+                <child :message="content" @add="childadd"></child>
+                </div>`
+        })
+        Vue.component('child', {
+            props: ['message'],
+            data() {
+                return {
+                    a: 0
+                }
+            },
+            methods: {
+                btnClicked() {
+                    this.a++
+                    this.$emit('add')
+                }
+            },
+            template: `<div class="child">
+                {{message}}
+                <button @click="btnClicked">{{a}}</button>
+                </div>`
+        })
+        Vue.component('container', {
+            template: `<div class="main">
+                        <header>header</header>
+                        <slot name="content1"></slot>
+                        <div class="sep"></div>
+                        <slot name="content2"></slot>
+                        <footer>footer</footer>
+                    </div>`
+        })
+        Vue.component('asynccontent', function (resolve, reject) {
+            setTimeout(() => {
+                resolve({
+                    template: `<div>async-content</div>`
+                })
+            }, 1000)
+        })
+        var vm = new Vue({
+            el: '#app',
+
+        })
+    </script>
+</body>
+
+</html>
