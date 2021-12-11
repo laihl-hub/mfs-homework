@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            padding: 2px 0;
+        }
+
+        li:hover {
+            cursor: pointer;
+        }
+
+        .folder {
+            font-weight: bolder;
+        }
+
+        .box {
+            width: 50%;
+            margin: 50px auto;
+            border-top: 1px solid lightgray;
+            border-left: 1px solid lightgray;
+            border-right: 1px solid lightgray;
+            background-color: rgb(238, 235, 235);
+        }
+
+        h2,
+        h5 {
+            margin-left: 25%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>树形视图</h2>
+        <h5>(You can double click on an item to turn it into a folder.)</h5>
+        <div class="box">
+            <tree :items="nodes"></tree>
+        </div>
+
+    </div>
+
+    <script>
+        Vue.component('tree', {
+            props: ["items"],
+            data() {
+                return {}
+            },
+
+            methods: {
+                addItem() {
+                    console.log(this.items);
+                    this.items.push({ name: 'new stuff', isFolder: false, isShow: false, children: null })
+                },
+                itemOp(index) {
+                    this.items[index].isShow = !this.items[index].isShow
+                },
+                changeToFolder(index) {
+                    if (this.items[index].isFolder) {
+                        return
+                    }
+                    this.items[index].isFolder = true
+                    this.items[index].isShow = true
+                    this.items[index].children = [{ name: 'new stuff', isShow: false, isFolder: false, children: null }]
+                    console.log(this.items[index].children);
+                }
+            },
+            template: `
+                <ol>
+                    <li v-for="(i,index) in items" @click.stop="itemOp(index)" @dblclick.stop="changeToFolder(index)"><span :class="{folder:i.isFolder}">{{i.name}}</span><span v-if="i.isFolder&&i.isShow">[-]</span><span v-else-if="i.isFolder&&!i.isShow">[+]</span>
+                        <tree v-if="i.isFolder&&i.isShow" :items="i.children"></tree>
+                        </li>
+                        <li @click.stop="addItem">+</li>
+                    </ol>
+                `
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                nodes: [
+                    {
+                        id: '1',
+                        name: 'My tree',
+                        isShow: false,
+                        isFolder: true,
+                        children: [
+                            {
+                                id: '1-1',
+                                name: 'hello',
+                                isShow: false,
+                                isFolder: false,
+                                children: null
+                            }, {
+                                id: '1-2',
+                                name: 'wat',
+                                isShow: false,
+                                isFolder: false,
+                                children: null
+                            },
+                            {
+                                id: '1-3',
+                                name: 'child folder',
+                                isShow: false,
+                                isFolder: true,
+                                children: [
+                                    {
+                                        id: '1-3-1',
+                                        name: 'child folder',
+                                        isShow: false,
+                                        isFolder: true,
+                                        children: [
+                                            {
+                                                id: '1-3-1-1',
+                                                name: 'hello',
+                                                isShow: false,
+                                                isFolder: false,
+                                                children: null
+                                            },
+                                            {
+                                                id: '1-3-1-2',
+                                                name: 'wat',
+                                                isShow: false,
+                                                isFolder: false,
+                                                children: null
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: '1-3-2',
+                                        name: 'hello',
+                                        isShow: false,
+                                        isFolder: false,
+                                        children: null
+                                    },
+                                    {
+                                        id: '1-3-3',
+                                        name: 'wat',
+                                        isShow: false,
+                                        isFolder: false,
+                                        children: null
+                                    },
+                                    {
+                                        id: '1-3-4',
+                                        name: 'child folder',
+                                        isShow: false,
+                                        isFolder: true,
+                                        children: [
+                                            {
+                                                id: '1-3-4-1',
+                                                name: 'hello',
+                                                isShow: false,
+                                                isFolder: false,
+                                                children: null
+                                            },
+                                            {
+                                                id: '1-3-4-2',
+                                                name: 'wat',
+                                                isShow: false,
+                                                isFolder: false,
+                                                children: null
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+
+                        ]
+                    }
+                ]
+            },
+
+
+        })
+    </script>
+</body>
+
+</html>

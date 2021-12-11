@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            margin: 100px 30%;
+            border-top: 1px solid lightgray;
+            border-left: 1px solid lightgray;
+            border-right: 1px solid lightgray;
+            background-color: rgb(247, 243, 243);
+            padding: 5px 5% 100px;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .head {
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+        }
+
+        .head,
+        .foot,
+        ul {
+            background-color: white;
+        }
+
+        .head,
+        li {
+            border-bottom: 1px solid lightgrey;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .foot {
+            border-bottom: 1px solid lightgrey;
+            height: 35px;
+            line-height: 35px;
+            color: rgb(185, 182, 182);
+        }
+
+        .foot-btn {
+            display: inline-block;
+            margin-left: 50px;
+        }
+
+        .foot-btn span {
+            margin-right: 10px;
+            padding: 0 5px;
+        }
+
+        .foot-btn span:hover {
+            border: 1px solid rgb(245, 231, 232);
+        }
+
+        .btn-clicked {
+            border: 1px solid rgb(243, 203, 209);
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: lightgray;
+        }
+
+        h1 {
+            margin-left: 30%;
+            font-size: 50px;
+            color: lightpink;
+        }
+
+        li:hover,
+        span:hover {
+            cursor: default;
+        }
+
+        li span {
+            margin-right: 30px;
+            float: right;
+            color: rgb(212, 182, 182);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="box">
+            <h1>todos</h1>
+            <div class="head">
+                <input type="checkbox" v-model="allDone">
+                <input type="text" v-model="newTodo" @keyup.enter="addNewTodo"
+                    style="height:90%;width: 100%;border: 1px solid transparent;">
+            </div>
+
+            <ul>
+                <li v-for="(i,index) in filterTodos" :class="i.state?'completed':''">
+                    <input type="checkbox" v-model="i.state">
+                    {{i.name}}
+                    <span @click="deleteTodo(index)">X</span>
+                </li>
+            </ul>
+            <div class="foot">
+                <span>{{leftNums}} items left</span>
+                <div class="foot-btn">
+                    <span @click="visibility='all'" :class="[visibility==='all'?clicked:'']">all</span>
+                    <span @click="visibility='active'" :class="[visibility==='active'?clicked:'']">active</span>
+                    <span @click="visibility='completed'"
+                        :class="[visibility==='completed'?clicked:'']">completed</span>
+                    <span @click="clear" v-if="completedNums" :class="[visibility==='clear'?clicked:'']">clear</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                newTodo: '',
+                todoList: [
+                    { name: 'sisisi', state: false },
+                    { name: 'didi', state: false }
+                ],
+                visibility: 'all',
+                allDone: false,
+                clicked: 'btn-clicked'
+            },
+            methods: {
+                addNewTodo() {
+                    {
+                        if (this.newTodo.trim() == '') {
+                            this.newTodo = ''
+                            return
+                        }
+                        var item = { name: this.newTodo, state: false }
+                        this.newTodo = ''
+                        this.todoList.push(item)
+                    }
+                },
+                deleteTodo(index) {
+                    this.todoList.splice(index, 1)
+                },
+                clear() {
+                    this.todoList = this.todoList.filter(i => !i.state)
+                }
+            },
+            computed: {
+                filterTodos: function () {
+                    if (this.visibility === 'all') {
+                        return this.todoList
+                    } else if (this.visibility === 'active') {
+                        return this.todoList.filter(i => !i.state)
+                    } else if (this.visibility === 'completed') {
+                        return this.todoList.filter(i => i.state)
+                    }
+                },
+                leftNums: function () {
+                    return this.todoList.filter(i => !i.state).length
+                },
+                completedNums: function () {
+                    return this.todoList.filter(i => i.state).length
+                }
+            },
+            watch: {
+                allDone: function (val) {
+                    this.todoList.map(i => {
+                        i.state = val
+                        return i
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
