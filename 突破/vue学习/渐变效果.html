@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .trans-enter-active,
+        .trans-leave-active {
+            transition: all 1s;
+        }
+
+        .trans-enter,
+        .trans-leave-to {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="add">add</button>
+        <button @click="remove">remove</button><br>
+        <transition-group name="trans" tag="p">
+            <span v-for="i in arr" :key="i">{{i}}</span>
+        </transition-group>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                arr: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            },
+            methods: {
+                add() {
+                    var length = this.arr.length
+                    var index = Math.floor(Math.random() * length)
+                    var i = Math.max(...this.arr) + 1
+                    this.arr.splice(index, 0, i)
+                },
+                remove() {
+                    var length = this.arr.length
+                    var index = Math.floor(Math.random() * length)
+                    this.arr.splice(index, 1)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

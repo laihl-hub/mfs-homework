@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <my-template></my-template>
+        <same-template></same-template>
+    </div>
+
+    <script>
+        Vue.component('my-template', {
+            data() {
+                return {
+                    message: ''
+                }
+            },
+            template: `<div>
+                          <h1>I'm a template!</h1>
+                          <p v-if="message">
+                            {{ message }}
+                          </p>
+                          <p v-else>
+                             No message.
+                          </p>
+                        </div>`
+        })
+        Vue.component('same-template', {
+            data() {
+                return {
+                    message: ''
+                }
+            },
+            render: function (createElement) {
+                var h1 = createElement('h1', "I'm a template!")
+                var p
+                if (this.message) {
+                    p = createElement('p', this.message)
+                } else {
+                    p = createElement('p', "No message")
+                }
+                return createElement('div', {
+                    style: {
+                        color: 'lightPink'
+                    }
+                }, [h1, p])
+            }
+
+        })
+        var vm = new Vue({
+            el: '#app',
+        })
+
+    </script>
+</body>
+
+</html>
