@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <style>
+    .valid {
+      display: none;
+    }
+
+    .valid.show {
+      display: inline-block;
+      color: red;
+    }
+
+    #form {
+      margin-top: 20px;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+</head>
+
+<body>
+
+  <!-- 省市区三级联动 -->
+  省份：<select name="region" id="region" value="">
+    <!-- <option value="regionName" index='code'>regionName</option> -->
+  </select>&nbsp;
+  城市：<select name="city" id="city" value="">
+    <!-- <option value="code">cityName</option> -->
+  </select>&nbsp;
+  区县：<select name="county" id="county" value="">
+    <!-- <option value="code">countyName</option> -->
+  </select><br>
+  <script>
+    var regionSel = document.getElementById('region')
+    var citySel = document.getElementById('city')
+    var countySel = document.getElementById('county')
+
+    $.ajax({
+      method: 'get',
+      url: '/users/region',
+      success: function (res) {
+        console.log(res);
+        res.forEach(item => {
+          createOption(regionSel, item)
+        });
+      }
+    })
+    function createOption(node, data) {
+      var option = document.createElement('option')
+      var html = `<option value="${data}">${data}</option>`
+      option.innerHTML = html
+      node.appendChild(option)
+    }
+    regionSel.onchange = function () {
+      console.log(regionSel.value);
+      $.ajax({
+        method: 'get',
+        url: '/users/cities/' + regionSel.value,
+        success: function (res) {
+          console.log(res);
+          res.forEach(item => { createOption(citySel, item) })
+        }
+      })
+    }
+    citySel.onchange = function () {
+      var cityIndex = citySel.selectedIndex
+      $.ajax({
+        method: 'get',
+        url: '/users/countries/' + regionSel.value + '/' + citySel.value,
+        success: function (res) {
+          res.forEach(item => { createOption(countySel, item) })
+        }
+      })
+    }
+  </script>
+
+
+  <!-- 用户注册 -->
+  <form action="" id="form">
+    username:<input type="text" id="username" oninput="usernameChange()" pattern="^[a-zA-Z]\w{5,17}$">
+    <div class="username valid"></div><br>
+    password:<input type="password" id="password" oninput="passwordChange()" pattern="^\w{6,18}$"
+      onblur="ifValid(event)">
+    <div class="password valid"></div><br>
+    确认密码:<input type="password" id="repeatPassword" oninput="repeatChange()" onblur="ifValid(event)">
+    <div class="repeatPassword valid"></div><br>
+    <input type="submit" onclick="submit()">
+  </form>
+
+  <script>
+    var username = document.getElementById('username')
+    var password = document.getElementById('password')
+    var repeatPassword = document.getElementById('repeatPassword')
+    var timer1
+    var timer2
+    var timer3
+    function usernameChange() {
+      var usernameValid = $('.username.valid')
+      clearTimeout(timer1)
+      timer1 = setTimeout(() => {
+        if (username.validity.patternMismatch === true) {
+          usernameValid[0].innerText = '请输入以字母开头的6-18个字符'
+          usernameValid.addClass('show')
+        } else {
+          usernameValid.removeClass('show')
+          $.ajax({
+            method: 'post',
+            url: '/users/validName',
+            data: { username: username.value },
+            success: function (res) {
+              console.log(res);
+              if (res.exist) {
+                usernameValid[0].innerText = res.msg
+                usernameValid.addClass('show')
+              } else {
+                usernameValid.removeClass('show')
+              }
+            }
+          })
+        }
+      }, 500)
+    }
+    function ifValid(e) {
+      // console.log(e);
+      let target = e.target.id
+      console.log(target);
+      var passwordValid = $('.' + target + '.valid')
+      if (password.value == '') {
+        passwordValid[0].innerText = '密码不能为空'
+        passwordValid.addClass('show')
+      } else {
+        passwordValid.removeClass('show')
+      }
+    }
+    function passwordChange() {
+      var passwordValid = $('.password.valid')
+      clearTimeout(timer2)
+      timer2 = setTimeout(() => {
+        if (password.validity.patternMismatch === true) {
+          passwordValid[0].innerText = '请输入6-18个字符'
+          passwordValid.addClass('show')
+        } else {
+          passwordValid.removeClass('show')
+        }
+      }, 500)
+    }
+    function repeatChange() {
+      var repeatValid = $('.repeatPassword.valid')
+      clearTimeout(timer3)
+      timer3 = setTimeout(() => {
+        if (repeatPassword.value != password.value) {
+          repeatValid[0].innerText = '请确认密码是否正确'
+          repeatValid.addClass('show')
+        } else {
+          repeatValid.removeClass('show')
+        }
+      }, 500)
+    }
+
+    $('#form').on('submit', function () {
+      submit()
+      event.preventDefault()
+    })
+    function submit() {
+      $.ajax({
+        method: 'post',
+        url: '/users/regist',
+        data: { username: username.value, password: password.value },
+        success: function (res) {
+          console.log(res);
+          if (res.code === 0) {
+            alert(res.msg)
+          }
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>
