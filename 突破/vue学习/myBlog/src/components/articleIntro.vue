@@ -2,11 +2,13 @@
   <div class="box">
     <h3>{{ article.title }}</h3>
     <p class="info">
-      <span>前端</span><span class="circle"></span
-      ><span>{{ article.time }}</span
+      <span v-for="(item, index) in getTags" :key="index">{{ item.name }}</span
+      ><span class="circle"></span
+      ><span>{{ article.createdAt | dateTime("YYYY-MM-DD") }}</span
       ><span class="circle"></span><span>浏览 {{ article.viewTimes }}</span>
+      <!-- <button @click="deleteOne">删除</button> -->
     </p>
-    <p class="content">{{ article.intro }}</p>
+    <p class="content" v-html="article.intro"></p>
     <footer>
       <router-link :to="{ name: 'articleDel', params: { id: article.id } }"
         >查看文章</router-link
@@ -16,9 +18,30 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "articleIntro",
   props: ["article"],
+  data() {
+    return {
+      tags: [{ name: "" }],
+      // formattedTime: "",
+    };
+  },
+  created() {
+    this.tags = this.article.tags;
+    console.log(this.tags);
+    // this.formatTime(this.article.createdAt);
+  },
+  computed: {
+    getTags() {
+      if (this.article.tags) {
+        return this.article.tags;
+      } else {
+        return { name: "" };
+      }
+    },
+  },
 };
 </script>
 

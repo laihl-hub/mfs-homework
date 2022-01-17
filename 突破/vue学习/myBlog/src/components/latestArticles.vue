@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <h4>近期文章</h4>
-    <span class="item" v-for="(article, index) in latests" :key="index">
+    <span class="item" v-for="(article, index) in latestArticles" :key="index">
       <router-link
         :to="{ name: 'latestAticleDel', params: { id: article.id } }"
         >{{ article.title }}</router-link
@@ -11,9 +11,27 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "latestArticles",
-  props: ["latests"],
+  // props: ["latests"],
+  data() {
+    return {
+      latestArticles: {},
+    };
+  },
+  created() {
+    this.getLatestArticles();
+  },
+  methods: {
+    getLatestArticles() {
+      axios.get("http://localhost:3000/api/latest-article").then((res) => {
+        if (res.data.code === 0) {
+          this.latestArticles = res.data.data;
+        }
+      });
+    },
+  },
 };
 </script>
 

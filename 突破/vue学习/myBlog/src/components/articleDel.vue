@@ -2,22 +2,26 @@
   <div class="content">
     <h3>{{ curArticle.title }}</h3>
     <p class="info">
-      <span>前端</span><span class="circle"></span
-      ><span>{{ curArticle.time }}</span
+      <span v-for="(item, index) in tags" :key="index">{{ item.name }}</span
+      ><span class="circle"></span
+      ><span>{{ curArticle.createdAt | dateTime("YYYY-MM-DD") }}</span
       ><span class="circle"></span><span>浏览 {{ curArticle.viewTimes }}</span>
+      <!-- <router-link :to="{ name: 'articleEdit', params: { id: curArticle.id } }"
+        >编辑</router-link
+      > -->
     </p>
-    <p class="context">
-      {{ curArticle.del }}
-    </p>
+    <p class="context" v-html="curArticle.del"></p>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "articleDel",
   data() {
     return {
       curArticle: "",
+      tags: [{ name: "" }],
     };
   },
   created() {
@@ -31,11 +35,17 @@ export default {
   },
   methods: {
     fetchData() {
-      if (this.$route.name.indexOf("latest") != -1) {
-        this.curArticle = this.$parent.latest[this.$route.params.id - 1];
-      } else {
-        this.curArticle = this.$parent.articles[this.$route.params.id - 1];
-      }
+      let id = this.$route.params.id;
+
+      axios.get("http://localhost:3000/api/article/" + id).then((res) => {
+        if (res.data.code === 0) {
+          this.curArticle = res.data.data;
+          this.tags = res.data.data.tags;
+        } else if (res.data.code === 1) {
+          this.$router.push({ path: "/404NotFound" });
+        }
+      });
+      // }
     },
   },
 };

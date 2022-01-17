@@ -1,16 +1,42 @@
 <template>
   <div class="box">
     <h4>标签</h4>
-    <span class="item" v-for="(item, index) in items" :key="index">{{
-      item
-    }}</span>
+    <span
+      class="item"
+      v-for="(item, index) in tags"
+      :key="index"
+      @click="selectedByTag(index)"
+      >{{ item.name }}</span
+    >
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "tags",
-  props: ["items"],
+  // props: ["items"],
+  data() {
+    return {
+      tags: [{ name: "" }],
+    };
+  },
+  created() {
+    this.getTags();
+  },
+  methods: {
+    getTags() {
+      axios.get("http://localhost:3000/api/tags").then((res) => {
+        if (res.data.code === 0) {
+          this.tags = res.data.data;
+        }
+      });
+    },
+    selectedByTag(index) {
+      let id = this.tags[index].id;
+      this.$router.push({ name: "homeByTag", params: { id: id } });
+    },
+  },
 };
 </script>
 
@@ -31,5 +57,8 @@ export default {
   margin-top: 10px;
   margin-right: 5px;
   padding: 0 5px;
+}
+.item:hover {
+  cursor: pointer;
 }
 </style>
