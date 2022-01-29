@@ -13,13 +13,19 @@ router.prefix('/tags')
 
 
 router.get('/',async(ctx)=>{
-    let {sort=[],offset=0,pageSize=10}=ctx.request.query
+    let {sort=[],offset=0,pageSize='max'}=ctx.request.query
     if(typeof sort=='string'){
         console.log(111111)
         sort=JSON.parse(sort)
     }
     offset=parseInt(offset)
+    if(pageSize!='max'){
+        
+    }else{
+        pageSize=await Tag.count()
+    }
     pageSize=parseInt(pageSize)
+    // pageSize=parseInt(pageSize)
     let tags=await Tag.findAll({
         order:sort.length===0?null:[sort],
         offset:offset,
@@ -89,15 +95,19 @@ router.put('/:id',async(ctx)=>{
     ctx.body=res
 })
 
-router.delete('/:id',async(ctx)=>{
+router.delete('/',async(ctx)=>{
     let tag
+    let {ids}=ctx.request.query
+    console.log(ids)
+    ids=JSON.parse(ids)
     try {
-        tag=await Tag.destroy({where:{id:ctx.params.id}})
+        // tag=await Tag.destroy({where:{id:ctx.params.id}})
+        tag=await Tag.destroy({where:{id:ids}})
     } catch (error) {
         ctx.body={code:1,msg:'失败',data:''}
         return
     }
-    ctx.body={code:0,msg:'成功',data:tag}
+    ctx.body={code:0,msg:'成功',data:ids}
     
 
 })

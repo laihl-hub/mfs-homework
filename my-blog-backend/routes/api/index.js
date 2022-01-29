@@ -11,7 +11,7 @@ router.prefix('/api')
 
 
 router.use(async(ctx,next)=>{
-    ctx.set({"Access-Control-Allow-Origin":"http://localhost:8080",
+    ctx.set({"Access-Control-Allow-Origin":"http://localhost:4200",
     "Access-Control-Allow-Credentials":"true" ,
     "Access-Control-Allow-Methods":"GET,POST,PUT,DELETE,PATCH,OPTIONS"})
     if(ctx.method.toLocaleUpperCase()==='OPTIONS'){
@@ -25,21 +25,22 @@ router.use(async(ctx,next)=>{
   console.log(ctx.request);
   const {method,url}=ctx.request
   const userId=ctx.session.userId||1
+  console.log(userId)
   let user=await User.findOne({where:{'id':userId}})
   let permissions=await user.getPermissions()
   console.log(permissions);
   if(method!='GET'){
-    console.log(userId);
+    // console.log(userId);
     if(permissions.some(i=>i.method==method&&new RegExp(i.path).test(url))){
       await next()
     }else{
       ctx.body={code:1,msg:'没有权限',data:''}
     }
   }else{
-    if(url==='/api/users'){
-      // console.log('走到了这里');
+    if(url.indexOf('/api/users')!=-1){
+      console.log('走到了这里')
       let res=permissions.some(i=>i.method==method&& new RegExp( i.path).test(url))
-      console.log(res);
+      console.log(res)
       if(res){
         // console.log(res);
         // await next()

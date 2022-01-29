@@ -38,8 +38,15 @@ router.get('/',async(ctx)=>{
     if(userId!=''){
         userId=parseInt(userId)
     }
+    console.log(userId);
     offset=parseInt(offset)
+    if(pageSize!='max'){
+        
+    }else{
+        pageSize=await Article.count()
+    }
     pageSize=parseInt(pageSize)
+    
 //     ctx.set({"Access-Control-Allow-Origin":"*",
 //     "Access-Control-Allow-Methods":"GET,POST,PUT,DELETE,PATCH"
 // })
@@ -112,6 +119,13 @@ router.post('/',async(ctx)=>{
             console.log(article.id);
             await Tagging.create({articleId:article.id,tagId:id})
         }
+        article=await Article.findOne({where:{id:article.id},include:[{model:User,attributes:['username']}]})
+        // let user=await User.findOne({where:{id:userId},attributes:['username']})
+        // user={username:user.username}
+        // console.log(user);
+        // console.log(article);
+        // article=Object.assign({},article,{user:user})
+        // console.log(article);
         // tag=JSON.parse(tag)
         res={code:0,msg:'发表成功',data:article}
     
@@ -145,15 +159,27 @@ router.put('/:id',async(ctx)=>{
     ctx.body=res
 })
 
-router.delete('/:id',async(ctx)=>{
-    let article=await Article.findOne({where:{id:ctx.params.id}})
-    if(!article){
-        res={code:1,msg:'失败'}
-    }else{
-        await article.destroy()
-        res={code:0,msg:'删除成功'}
+router.delete('/',async(ctx)=>{
+    let article
+    let {ids}=ctx.request.query
+    console.log(ids)
+    ids=JSON.parse(ids)
+    // article=await Article.findOne({where:{id:ctx.params.id}})
+    try {
+        // tag=await Tag.destroy({where:{id:ctx.params.id}})
+        article=await Article.destroy({where:{id:ids}})
+    } catch (error) {
+        ctx.body={code:1,msg:'失败',data:''}
+        return
     }
-    ctx.body=res
+    ctx.body={code:0,msg:'成功',data:ids}
+    // if(!article){
+    //     res={code:1,msg:'失败'}
+    // }else{
+    //     await article.destroy()
+    //     res={code:0,msg:'删除成功'}
+    // }
+    // ctx.body=res
 })
 
 
