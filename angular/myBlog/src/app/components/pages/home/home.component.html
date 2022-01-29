@@ -1,0 +1,54 @@
+<div class="box">
+    <div class="main" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="loadMore()"
+        *ngIf="url!='articleDel'">
+        <div class="articleBox" *ngFor="let article of articles">
+            <h3>{{article.title}}</h3>
+            <p class="info">
+                <span *ngFor="let tag of article.tags">{{tag.name}}&nbsp;&nbsp;</span>
+                <span class="circle"></span>&nbsp;
+                <span>{{article.createdAt|date:"yyyy-MM-dd"}}</span>
+                <span class="circle"></span>&nbsp;
+                <span>{{article.viewTimes}}</span>
+            </p>
+            <p class="content">{{article.intro}}...</p>
+            <footer>
+                <a routerLink="/articleDel/{{article.id}}">查看文章</a>
+            </footer>
+        </div>
+    </div>
+    <div *ngIf="url==='articleDel'" class="main">
+        <div class="articleBox">
+            <h3>{{selectedArticle.title}}</h3>
+            <p class="info">
+                <span *ngFor="let tag of selectedArticle.tags">{{tag.name}}&nbsp;&nbsp;</span>
+                <span class="circle"></span>&nbsp;
+                <span>{{selectedArticle.createdAt|date:"yyyy-MM-dd"}}</span>
+                <span class="circle"></span>&nbsp;
+                <span>{{selectedArticle.viewTimes}}</span>
+            </p>
+
+            <p class="content">{{selectedArticle.del}}...</p>
+
+
+
+        </div>
+    </div>
+    <div class="sideNav">
+        <div class="latest">
+            <h3>近期文章</h3>
+            <span class="latestItem" *ngFor="let latestArticle of latestArticles">
+                <a routerLink="/articleDel/{{latestArticle.id}}">{{latestArticle.title}}</a>
+            </span>
+        </div>
+        <div class="kind">
+            <h3>文章归档</h3>
+            <span class="kindItem" *ngFor="let kind of kinds">
+                <a routerLink="/byKind/{{kind.kind}}">{{kind.kind}}&nbsp;({{kind.count}})</a>
+            </span>
+        </div>
+        <div class="tag">
+            <h3>文章标签</h3>
+            <span class="tagItem" *ngFor="let tag of tags"><a routerLink="/byTag/{{tag.id}}">{{tag.name}}</a></span>
+        </div>
+    </div>
+</div>

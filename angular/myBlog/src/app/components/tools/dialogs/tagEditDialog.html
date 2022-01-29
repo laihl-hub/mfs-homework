@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+    <!-- <mat-form-field appearance="fill"> -->
+    <span>标签名：</span>
+    <input type="text" [(ngModel)]="data.data.name">
+    <span>密码：</span>
+    <input type="text" [(ngModel)]="data.data.description">
+    <!-- <input [(ngModel)]="loginData.password"> -->
+    <!-- </mat-form-field> -->
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="confirm()">确定</button>
+    <button mat-button (click)="cancel()">取消</button>
+</div>

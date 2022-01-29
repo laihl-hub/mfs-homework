@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+    <!-- <mat-form-field appearance="fill"> -->
+    <span>文章标题：</span>
+    <input type="text" [(ngModel)]="data.data.title">
+    <span>标签：</span>
+    <!-- <input type="text"> -->
+    <mat-chip-list #chipList aria-label="tag selection">
+        <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">{{tag.name}}
+            <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-chip>
+        <mat-label>选择标签</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let tag of all" [value]="tag" (click)="addSel(tag)">
+                {{tag.name}}</mat-option>
+        </mat-select>
+    </mat-chip-list>
+    <span>文章内容</span>
+    <!-- <input type="text"> -->
+    <textarea cols="30" rows="10" [(ngModel)]="data.data.del"></textarea>
+    <!-- <input [(ngModel)]="loginData.password"> -->
+    <!-- </mat-form-field> -->
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="confirm()">确认</button>
+    <button mat-button (click)="cancel()">取消</button>
+</div>

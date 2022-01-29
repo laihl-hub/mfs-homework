@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>登录</h1>
+<div mat-dialog-content>
+    <!-- <mat-form-field appearance="fill"> -->
+    <span>用户名：</span>
+    <input type="text" [(ngModel)]="loginData.username">
+    <span>密码：</span>
+    <input type="password" [(ngModel)]="loginData.password">
+    <!-- <input [(ngModel)]="loginData.password"> -->
+    <!-- </mat-form-field> -->
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="confirm()">登录</button>
+    <button mat-button (click)="cancel()">取消</button>
+    <button mat-button (click)="regist()">注册</button>
+</div>

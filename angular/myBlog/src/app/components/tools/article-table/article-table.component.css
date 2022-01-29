@@ -1,0 +1,52 @@
+.tableBox {
+  width: 100%;
+}
+table {
+  background-color: rgb(194, 169, 169);
+  width: 100%;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-rate-limit-reached {
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Column Widths */
+.mat-column-number,
+.mat-column-state {
+  max-width: 64px;
+}
+
+.mat-column-created {
+  max-width: 124px;
+}
+
+footer {
+  display: flex;
+  height: 60px;
+  line-height: 60px;
+  color: rgb(231, 227, 227);
+  justify-content: right;
+}
+footer button {
+  margin-top: 15px;
+  height: 30px;
+  margin-right: 30em;
+}
+.mat-paginator {
+  margin-left: 20px;
+  background-color: rgb(194, 169, 169);
+}

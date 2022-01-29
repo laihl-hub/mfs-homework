@@ -1,0 +1,14 @@
+<header>
+    <div class="left">
+        <h1>个人博客</h1>
+        <span (click)="wantAddBlog()">发表博客</span>
+        <span (click)="openLoginDialog()" *ngIf="!usersService.isLogin">登录</span>
+        <span (click)="loginout()" *ngIf="usersService.isLogin">登出</span>
+
+    </div>
+    <div class="right">
+        <a routerLink="/">主页</a>
+        <a routerLink="/about">关于</a>
+        <a routerLink="/admin">管理</a>
+    </div>
+</header>
